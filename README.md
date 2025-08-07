@@ -29,11 +29,11 @@ This is a simple RESTful API service for managing bets. It's built using Fastify
 ├── index.ts              # App entry point
 │
 ├── errors/               # Error handling
-│   ├── AppError.ts
-│   ├── BusinessError.ts
-│   ├── ErrorCodes.ts
-│   ├── ErrorHandler.ts
-│   └── TechnicalError.ts
+│   ├── appError.ts
+│   ├── businessError.ts
+│   ├── errorCodes.ts
+│   ├── errorHandler.ts
+│   └── technicalError.ts
 │
 ├── events/               # Event-driven logic
 │   └── emitter.ts
