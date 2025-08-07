@@ -1,75 +1,76 @@
-### Setup & Run Instructions
 
+# Betting POC API
+
+## 🧰 Setup & Run Instructions
+
+```bash
 # Install dependencies
-
 npm install
 
 # Run the API
-
 npx tsx backend/index.ts
 
 # Run tests
-
 npm test
+```
 
-### Architecture
+Server runs on `http://localhost:3001`
 
-This is a simple RESTful api service for managing bets. It's built with Fastify for performace and simplicity. with an in-memoty store(Map) for holding bet information. The app uses an in-memory store (Map) to hold betting data and includes custom validation and centralised error handling to improve maintainability and separation of logic
+## ⚙️ Architecture Explanation
 
-### Folder Structure
+This is a simple RESTful API service for managing bets. It's built using Fastify for performance with an in-memory store (`Map`) for holding bet information. It includes error validation and error handling to improve maintainability and scalability potential.
 
+## 📁 Folder Structure
+
+```text
 /backend
 │
-├── app.ts # Fastify app builder
-├── index.ts # App entry point
+├── app.ts                # Fastify app builder
+├── index.ts              # App entry point
 │
-├── errors/ # Error handling
-│ ├── AppError.ts
-│ ├── BusinessError.ts
-│ ├── ErrorCodes.ts
-│ ├── ErrorHandler.ts
-│ └── TechnicalError.ts
+├── errors/               # Error handling
+│   ├── AppError.ts
+│   ├── BusinessError.ts
+│   ├── ErrorCodes.ts
+│   ├── ErrorHandler.ts
+│   └── TechnicalError.ts
 │
-├── events/ # Event-driven logic
-│ └── emitter.ts
+├── events/               # Event-driven logic
+│   └── emitter.ts
 │
-├── models/ # TypeScript interfaces and types
-│ └── bets.ts
+├── models/               # TypeScript interfaces and types
+│   └── bets.ts
 │
-├── routes/ # Route definitions
-│ └── betsRoute.ts
+├── routes/               # Route definitions
+│   └── betsRoute.ts
 │
-└── services/ # Business logic
-├── betService.ts
-└── oddsService.ts
+└── services/             # Business logic
+    ├── betService.ts
+    └── oddsService.ts
+```
 
-### Key technical decisions (bullet points are fine)
+## 📌 Key Technical Decisions
 
-- Fastify chosen for high performance and minimal boilerplate over heavier frameworks like Express.
-- In-memory store (Map) used to meet POC requirements with fast, simple data access.
-- Modular structure with clear separation of concerns (routes, services, models, errors, events).
-- Custom error classe provide clear distinction between internal and domain level issues
-- Service-layer validation keeps route handlers clean and focused on HTTP concerns.
-- EventEmitter used to simulate an event-driven architecture on odds updates.
-- Error codes follow a structured naming convention (BETTING_POC_4XXX) to improve traceability and debugging.
-- Unit tests cover both happy and edge cases.
+- **Fastify**: Used for its speed and modern plugin system
+- **Centralised error handling** with custom `AppError` types for business and technical errors
+- **In-memory store**: Simple and fast for proof-of-concept
+- **Service-layer validation**: Keeps routes clean and logic reusable
+- **EventEmitter** used to simulate basic event-driven behaviour
+- **Modular folder structure** for separation of concerns
 
-### Main Assumptions Made
+## ✅ Assumptions
 
-- No authentication or user management — this is a public, open API for demonstration purposes only.
+- No authentication required
 - Bets are stored in-memory using a Map, meaning data is lost on server restart.
-- Only three endpoints created for the POC:
-  - POST /bets to create a bet
-  - GET /bets to retrieve bets (with optional filters)
-  - PUT /bets/:id/odds to update odds
-- Odds updates emit a simple event using Node’s EventEmitter; no persistent event queue or subscriber model is needed for this POC.
-- Error codes follow a custom convention (BETTING_POC_4XXX) and are split into business and technical categories for clarity.
+- Only three endpoints: create, get (with filters), update odds
+- Odds must be a number > 0
+- Valid bet `status` is either `'open'` or `'closed'`
+- Error handling uses fixed error codes
 
-### AI Usage
+## 🤖 AI Usage
 
-This solution was developed with the help of ChatGPT, used specifically for:
+ChatGPT was used for:
+- Code structure design & refactoring
+- README and documentation drafting
 
-- Refactoring code for readability and maintainability
-- Writing inline documentation and test scaffolding
-
-All AI-generated code was manually reviewed, modified, and tested to meet production-quality standards
+All code was reviewed and modified by a human before submission.
